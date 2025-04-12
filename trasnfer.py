@@ -11,9 +11,6 @@ import requests
 #------------------------- spotify cred from spootify dev dashboard-------------------------------------------
 
 load_dotenv()
-SPOTIFY_CLIENT_ID = '73edd4323c294093a45dda1524cc3610'
-SPOTIFY_CLIENT_SECRET = '7535e70f53b64cb3a6b74dec1866330a'
-SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8888/callback'
 
 session = requests.Session()
 adapter = requests.adapters.HTTPAdapter(max_retries=3)
@@ -21,9 +18,9 @@ session.mount("https://", adapter)
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
-        client_id=SPOTIFY_CLIENT_ID,
-        client_secret=SPOTIFY_CLIENT_SECRET,
-        redirect_uri=SPOTIFY_REDIRECT_URI,
+        client_id=os.getenv("SPOTIFY_CLIENT_ID"),
+        client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"),
+        redirect_uri=os.getenv("SPOTIFY_REDIRECT_URI"),
         scope='user-library-read playlist-read-private playlist-read-collaborative'
     ),
     requests_timeout=20,  #rate-limit
